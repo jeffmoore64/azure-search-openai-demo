@@ -18,10 +18,10 @@ class ChatUser(HttpUser):
                     {
                         "content": random.choice(
                             [
-                                "What is included in my Northwind Health Plus plan that is not in standard?",
-                                "What does a Product Manager do?",
-                                "What happens in a performance review?",
-                                "Whats your whistleblower policy?",
+                                "What are the different job roles involved in managing, controlling, and using data?",
+                                "How has the increase in data generated affected data professionals?",
+                                "Can you provide an example of a table structure in Azure Cosmos DB for Apache Cassandra?",
+                                "What is the syntax used to retrieve a specific record in Azure Cosmos DB for Apache Cassandra?",
                             ]
                         ),
                         "role": "user",
@@ -41,12 +41,12 @@ class ChatUser(HttpUser):
             "/chat",
             json={
                 "history": [
-                    {"content": "What happens in a performance review?", "role": "user"},
+                    {"content": "How has the increase in data generated affected data professionals?", "role": "user"},
                     {
-                        "content": "During a performance review, employees will receive feedback on their performance over the past year, including both successes and areas for improvement. The feedback will be provided by the employee's supervisor and is intended to help the employee develop and grow in their role [employee_handbook-3.pdf]. The review is a two-way dialogue between the employee and their manager, so employees are encouraged to be honest and open during the process [employee_handbook-3.pdf]. The employee will also have the opportunity to discuss their goals and objectives for the upcoming year [employee_handbook-3.pdf]. A written summary of the performance review will be provided to the employee, which will include a rating of their performance, feedback, and goals and objectives for the upcoming year [employee_handbook-3.pdf].",
+                        "content": "The increase in data generated has led to the emergence of new technologies, roles, and approaches in the field of data, affecting data professionals [info-3.pdf].",
                         "role": "assistant",
                     },
-                    {"content": "Does my plan cover eye exams?", "role": "user"},
+                    {"content": "What are the responsibilities of a data engineer in defining and managing data pipelines?", "role": "user"},
                 ],
                 "overrides": {
                     "retrieval_mode": "hybrid",

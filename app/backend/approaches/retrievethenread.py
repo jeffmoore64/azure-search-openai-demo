@@ -17,25 +17,37 @@ class RetrieveThenReadApproach(Approach):
     """
 
     system_chat_template = (
-        "You are an intelligent assistant helping Contoso Inc employees with their healthcare plan questions and employee handbook questions. "
-        + "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. "
-        + "Answer the following question using only the data provided in the sources below. "
-        + "For tabular information return it as an html table. Do not return markdown format. "
-        + "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. "
-        + "If you cannot answer using the sources below, say you don't know. Use below example to answer"
+        "You are my test proctor. Test me on Azure Data Fundamentals also known as DP-900. " 
+        + "Ask one multiple choice question and allow me to answer before asking the next question. " 
+        + "Each question must have a minimum of four choices and a maximum of five choices." 
+        + "If the answer is wrong, provide the correct answer and ask the next question. " 
+        + "Answer ONLY with the facts listed in the list of sources below. " 
+        + "If there isn't enough information below, say you don't know. " 
+        + "Do not generate answers that don't use the sources below. " 
+        + "If asking a clarifying question to the user would help, ask the question. " 
+        + "Each source has a name followed by colon and the actual data, quote the source name for each piece of data you use in the response. " 
+        + "Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf]." 
+        + "Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question. " 
+        + "Answer the question using only the data provided in the information sources below. " 
+        + "For tabular information return it as an html table. Do not return markdown format. " 
+        + "For example, if the question is \"What color is the sky?\" and one of the information sources says \"info123: the sky is blue whenever it's not cloudy\", then answer with \"The sky is blue [info123]\" " 
+        + "It's important to strictly follow the format where the name of the source is in square brackets at the end of the sentence, and only up to the prefix before the colon (\":\"). " 
+        + "If there are multiple sources, cite each one in their own square brackets. For example, use \"[info343][ref-76]\" and not \"[info343,ref-76]\". " 
+        + "Never quote tool names as sources." 
+        + "If you cannot answer using the sources below, say that you don't know. "
     )
 
     # shots/sample conversation
     question = """
-'What is the deductible for the employee plan for a visit to Overlake in Bellevue?'
+'What are common structured database systems?'
 
 Sources:
-info1.txt: deductibles depend on whether you are in-network or out-of-network. In-network deductibles are $500 for employee and $1000 for family. Out-of-network deductibles are $1000 for employee and $2000 for family.
-info2.pdf: Overlake is in-network for the employee plan.
-info3.pdf: Overlake is the name of the area that includes a park and ride near Bellevue.
-info4.pdf: In-network institutions include Overlake, Swedish and others in the region
+info1.txt: Microsoft SQL Server.
+info2.pdf: MySQL.
+info3.pdf: PostgreSQL.
+info4.pdf: MariaDB.
 """
-    answer = "In-network deductibles are $500 for employee and $1000 for family [info1.txt] and Overlake is in-network for the employee plan [info2.pdf][info4.pdf]."
+    answer = "Relational databases: Relational databases are commonly used to store and query structured data. The data is organized into tables that represent entities, and each instance of an entity is assigned a primary key. Examples of relational database management systems that use SQL include Microsoft SQL Server, MySQL, PostgreSQL, MariaDB, and Oracle. [info2.pdf][info4.pdf]."
 
     def __init__(
         self,

@@ -26,19 +26,17 @@ class ChatReadRetrieveReadApproach(Approach):
     top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion
     (answer) with that prompt.
     """
-    system_message_chat_conversation = """Assistant helps the company employees with their healthcare plan questions, and questions about the employee handbook. Be brief in your answers.
-Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
-For tabular information return it as an html table. Do not return markdown format. If the question is not in English, answer in the language used in the question.
-Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brackets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].
+    system_message_chat_conversation = """You are my test proctor. Test me on Azure Data Fundamentals also known as DP-900. Ask one multiple choice question with a minimum of four possible answers and allow me to answer before asking the next question. If the answer is wrong, provide the correct answer and ask the next question with a minimum of four possible answers. Answer ONLY with the facts listed in the list of sources below. If the answer has a numeric value in it use at lease two significant digits. If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question. 
+Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brakets to reference the source, e.g. [info1.txt]. Don't combine sources, list each source separately, e.g. [info1.txt][info2.pdf].  List the sources in alphabetical order.
 {follow_up_questions_prompt}
 {injected_prompt}
 """
-    follow_up_questions_prompt_content = """Generate three very brief follow-up questions that the user would likely ask next about their healthcare plan and employee handbook.
-Use double angle brackets to reference the questions, e.g. <<Are there exclusions for prescriptions?>>.
+    follow_up_questions_prompt_content = """Generate three very brief follow-up questions that the user would likely ask next about the current subject.
+Use double angle brackets to reference the questions, e.g. <<Are there differences between databases?>>.
 Try not to repeat questions that have already been asked.
 Only generate questions and do not generate any text before or after the questions, such as 'Next Questions'"""
 
-    query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about employee healthcare plans and the employee handbook.
+    query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about Azure Data Fundamentals.
 You have access to Azure Cognitive Search index with 100's of documents.
 Generate a search query based on the conversation and the new question.
 Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
@@ -48,10 +46,23 @@ If the question is not in English, translate the question to English before gene
 If you cannot generate a search query, return just the number 0.
 """
     query_prompt_few_shots = [
-        {"role": USER, "content": "What are my health plans?"},
-        {"role": ASSISTANT, "content": "Show available health plans"},
-        {"role": USER, "content": "does my plan cover cardio?"},
-        {"role": ASSISTANT, "content": "Health plan cardio coverage"},
+        {"role": USER, "content": "Which type of data should be sent from video cameras in a native binary format?"},
+        {"role": ASSISTANT, "content": "Select only one answer." \
+"A) structured" \
+"B) semi-structured" \
+"C) unstructured" \
+"D) variable structured" \
+"Answer: Video data should be sent from video cameras in a native binary format. As mentioned in source 1, binary data is used to store images, video, audio, and application-specific documents. Video data is a type of unstructured data that is typically stored in its native binary format." \
+"Citations:" \
+"1. \[Explore file storage - Training _ Microsoft Learn-2.pdf\]"},
+        {"role": USER, "content": "Which of the following is a core data concept covered in the DP-900 exam?"},
+        {"role": ASSISTANT, "content": "A) Azure Machine Learning" \
+"B) Azure Data Factory" \
+"C) Relational data" \
+"D) Azure Virtual Machines" \
+"Answer: Relational data is indeed a core data concept covered in the DP-900 exam." \
+"Citations:" \
+"1. \[Explore file storage - Training _ Microsoft Learn-2.pdf\]"},
     ]
 
     def __init__(
